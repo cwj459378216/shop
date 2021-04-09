@@ -4,16 +4,16 @@
             <div class="avatar_box">
                 <img src="../assets/logo.png" alt="">
             </div>
-            <el-form label-width="0px" class="login_form">
-                <el-form-item >
-                    <el-input ></el-input>
+            <el-form ref="formRef" :model="form" :rules="rules" label-width="0px" class="login_form" @submit.native.prevent>
+                <el-form-item prop="username">
+                    <el-input  v-model="form.username" prefix-icon="iconfont icon-user"></el-input>
                 </el-form-item>
-                <el-form-item >
-                    <el-input ></el-input>
+                <el-form-item prop="password">
+                    <el-input v-model="form.password" prefix-icon="iconfont icon-3702mima" type="password"></el-input>
                 </el-form-item>
                 <el-form-item class="btns">
-                    <el-button type="primary">登陆</el-button>
-                    <el-button type="info">重置</el-button>
+                    <el-button type="primary" @click="login()" native-type="submit">登陆</el-button>
+                    <el-button type="info" @click="resetForm()">重置</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -21,7 +21,43 @@
 </template>
 
 <script>
-export default {}
+export default {
+    data () {
+        return {
+            form: {
+                username: '',
+                password: ''
+            },
+            rules: {
+                // 规则名要和表单名一样
+                username: [
+                    { required: true, message: '请输入用户名', triggle: 'blur' },
+                    { min: 3, max: 10, message: '长度3到10个字符', triggle: 'blur' }
+                ],
+                password: [
+                    { required: true, message: '请输入密码', triggle: 'blur' },
+                    { min: 6, max: 16, message: '长度6到16个字符', triggle: 'blur' }
+                ]
+            }
+        }
+    },
+    methods: {
+        resetForm () {
+            this.$refs.formRef.resetFields()
+        },
+        login () {
+            this.$refs.formRef.validate(async valid => {
+                if (!valid) return
+                // 直接返回是promise， 需要添加 await， await 需要 async修饰
+                // { data: res }  解构返回数据， data 负值给res
+                const { data: res } = await this.$http.post('login', this.form)
+                console.log(res)
+                if (res.meta.status !== 200) return console.log('登陆失败')
+                console.log('登陆成功')
+            })
+        }
+    }
+}
 </script>
 
 <style lang="less" scoped>
