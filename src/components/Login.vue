@@ -52,8 +52,11 @@ export default {
                 // { data: res }  解构返回数据， data 负值给res
                 const { data: res } = await this.$http.post('login', this.form)
                 console.log(res)
-                if (res.meta.status !== 200) return console.log('登陆失败')
-                console.log('登陆成功')
+                if (res.meta.status !== 200) return this.$message.error('登陆失败')
+                this.$message.success('登陆成功')
+
+                window.sessionStorage.setItem('token', res.data.token)
+                this.$route.push('/home')
             })
         }
     }
