@@ -25,8 +25,8 @@ export default {
     data () {
         return {
             form: {
-                username: '',
-                password: ''
+                username: 'admin',
+                password: '123456'
             },
             rules: {
                 // 规则名要和表单名一样
