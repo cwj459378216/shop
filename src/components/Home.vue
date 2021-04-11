@@ -7,14 +7,13 @@
 <script>
 export default {
   methods: {
-    logout () {
+    logout() {
       window.sessionStorage.clear()
-      this.$route.push('/login')
+      this.$router.push('/login')
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-
 </style>

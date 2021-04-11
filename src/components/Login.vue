@@ -56,7 +56,7 @@ export default {
                 this.$message.success('登陆成功')
 
                 window.sessionStorage.setItem('token', res.data.token)
-                this.$route.push('/home')
+                this.$router.push('/home')
             })
         }
     }
