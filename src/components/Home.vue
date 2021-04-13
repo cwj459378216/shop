@@ -11,13 +11,13 @@
         <el-aside :width="isCollapse ? '64px' : '200px' ">
           <div class="toggle-button" @click="toggleCollapse()">|||</div>
            <el-menu background-color="#333744" text-color="#fff" active-text-color="#409BFF" unique-opened :collapse="isCollapse"
-            :collapse-transition="isCollapse">
+            :collapse-transition="isCollapse" router :default-active="activePath">
             <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
               <template slot="title">
                 <i :class="iconsObj[item.id]"></i>
                 <span>{{item.authName}}</span>
               </template>
-              <el-menu-item :index="subItem.id + ''" v-for="subItem in item.children" :key="subItem.id">
+              <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavStatsu('/' + subItem.path)">
                 <template slot="title">
                   <i class="el-icon-location"></i>
                   <span>{{subItem.authName}}</span>
@@ -46,11 +46,13 @@ export default {
         102: 'iconfont icon-danju',
         145: 'iconfont icon-baobiao'
       },
-      isCollapse: false
+      isCollapse: false,
+      activePath: ''
     }
   },
   created() {
     this.getMenuList()
+    this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
     logout() {
@@ -65,6 +67,10 @@ export default {
     },
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
+    },
+    saveNavStatsu(activePath) {
+      window.sessionStorage.setItem('activePath', activePath)
+      this.activePath = activePath
     }
   }
 }
