@@ -25,7 +25,8 @@ const routes = [
       { path: '/welcome', name: 'Welcome', component: () => import('../components/Welcome.vue') },
       { path: '/users', name: 'Users', component: () => import('../components/user/Users.vue') },
       { path: '/rights', name: 'Rights', component: () => import('../components/power/Rights.vue') },
-      { path: '/roles', name: 'Roles', component: () => import('../components/power/Roles.vue') }
+      { path: '/roles', name: 'Roles', component: () => import('../components/power/Roles.vue') },
+      { path: '/categories', name: 'Cate', component: () => import('../components/goods/Cate.vue') }
     ]
   }
 ]
